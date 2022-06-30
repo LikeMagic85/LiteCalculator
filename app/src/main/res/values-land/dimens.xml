@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="screen_height">60dp</dimen>
+    <dimen name="screen_margin_top">10dp</dimen>
+    <dimen name="screen_padding">3dp</dimen>
+    <dimen name="screen_text_size">40sp</dimen>
+    <dimen name="line_height">2dp</dimen>
+    <dimen name="line_margin_top">10dp</dimen>
+    <dimen name="logo_margin_top">10dp</dimen>
+    <dimen name="logo_text_size">20sp</dimen>
+    <dimen name="keyboard_margin_top">20dp</dimen>
+    <dimen name="button_margin_end">4dp</dimen>
+    <dimen name="button_text_size">28sp</dimen>
+</resources>
