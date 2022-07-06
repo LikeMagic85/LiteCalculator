@@ -1,10 +1,18 @@
 package com.example.litecalculator.ui;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +22,9 @@ import android.widget.TextView;
 import com.example.litecalculator.R;
 import com.example.litecalculator.model.CalculatorImpl;
 import com.example.litecalculator.model.Operator;
+import com.example.litecalculator.model.Theme;
+import com.example.litecalculator.model.ThemeRepository;
+import com.example.litecalculator.model.ThemeRepositoryImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +37,16 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
 
     private final String PRESENTER = "presenter";
 
+    private ThemeRepository themeRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        themeRepository = ThemeRepositoryImpl.getInstance(this);
+
+        setTheme(themeRepository.getSavedTheme().getThemeRes());
+
         setContentView(R.layout.activity_calculator);
 
         resultTxt = findViewById(R.id.screen_text);
@@ -89,6 +107,30 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
         findViewById(R.id.button_result).setOnClickListener(view -> presenter.onResultPressed());
 
         findViewById(R.id.button_del).setOnClickListener(view -> presenter.onDelPressed());
+
+        ActivityResultLauncher<Intent> themeLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if(result.getResultCode() == Activity.RESULT_OK){
+                    Intent intent = result.getData();
+
+                    Theme selectedTheme = (Theme) intent.getSerializableExtra(SelectThemeActivity.EXTRA_THEME);
+
+                    themeRepository.saveTheme(selectedTheme);
+
+                    recreate();
+                }
+            }
+        });
+
+        findViewById(R.id.menu_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalculatorActivity.this, SelectThemeActivity.class);
+                intent.putExtra(SelectThemeActivity.EXTRA_THEME, themeRepository.getSavedTheme());
+                themeLauncher.launch(intent);
+            }
+        });
     }
 
     @Override
@@ -102,6 +144,9 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorV
         outState.putDouble(PRESENTER, presenter.getArgOne());
         super.onSaveInstanceState(outState);
     }
+
+
+
 
     @Override
     public void showResult(String result) {

@@ -11,4 +11,5 @@
     <dimen name="keyboard_margin_top">80dp</dimen>
     <dimen name="button_margin_end">4dp</dimen>
     <dimen name="button_text_size">28sp</dimen>
+    <dimen name="button_padding">10dp</dimen>
 </resources>

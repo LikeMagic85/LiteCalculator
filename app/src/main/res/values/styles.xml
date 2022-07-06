@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="ButtonStyle">
-        <item name="android:layout_rowWeight">1</item>
-        <item name="android:layout_columnWeight">1</item>
-        <item name="android:layout_marginEnd">@dimen/button_margin_end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/button_padding</item>
         <item name="android:background">@drawable/my_button_bg</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginEnd">@dimen/button_margin_end</item>
         <item name="android:textSize">@dimen/button_text_size</item>
-        <item name="android:layout_marginTop">3dp</item>
+    </style>
+
+    <style name="ButtonStyleDark" parent="ButtonStyle">
+        <item name="android:background">@drawable/my_button_bg_dark_theme</item>
     </style>
 </resources>

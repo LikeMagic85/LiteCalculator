@@ -22,4 +22,6 @@
     <string name="back">Del</string>
     <string name="result">=</string>
     <string name="logo_text">LiteCalculator</string>
+    <string name="theme_1">Light Theme</string>
+    <string name="theme_2">Dark Theme</string>
 </resources>
